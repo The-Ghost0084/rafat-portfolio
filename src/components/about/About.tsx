@@ -1,55 +1,210 @@
 import Image from "next/image";
 
-const skills = [
-  "Mobile Mapping",
-  "CORS / VRS Infrastructure",
-  "3D Laser Scanning",
-  "Technical Support",
-  "Project Leadership",
-  "Customer Training",
-];
+type AboutProps = {
+  lang: "en" | "ar";
+};
 
-const professionalHighlights = [
-  {
-    value: "13+",
-    label: "Years of Experience",
-    description: "Delivering technical and geospatial solutions.",
-  },
-  {
-    value: "300+",
-    label: "VRS Stations",
-    description: "Installed, operated, and maintained across Saudi Arabia.",
-  },
-  {
-    value: "20+",
-    label: "Documented Projects",
-    description: "Across positioning, mapping, and infrastructure sectors.",
-  },
-  {
-    value: "KSA",
-    label: "Project Coverage",
-    description: "Experience across multiple regions of Saudi Arabia.",
-  },
-];
+const content = {
+  en: {
+    sectionLabel: "About Me",
 
-const careerSnapshot = [
-  {
-    period: "2012 – 2013",
-    role: "System Engineer",
-    company: "Al-Salam Company",
-    description:
-      "System administration, help desk support, and hardware and software troubleshooting.",
-  },
-  {
-    period: "2013 – Present",
-    role: "Technical Support & Projects Team Leader",
-    company: "Al-Jehat Company",
-    description:
-      "Leading technical support teams and delivering geospatial projects and infrastructure solutions across Saudi Arabia.",
-  },
-];
+    headingBefore:
+      "Engineering reliable geospatial solutions through",
+    headingHighlight:
+      "expertise, leadership, and innovation.",
 
-export default function About() {
+    paragraphs: [
+      <>
+        For more than a decade, I have been helping organizations across
+        Saudi Arabia deliver complex geospatial projects through{" "}
+        <strong className="font-semibold text-slate-950">
+          technical leadership, advanced mapping technologies, and reliable
+          engineering support
+        </strong>
+        .
+      </>,
+
+      <>
+        From installing and maintaining{" "}
+        <strong className="font-semibold text-slate-950">
+          CORS and VRS infrastructure
+        </strong>{" "}
+        to supporting{" "}
+        <strong className="font-semibold text-slate-950">
+          Mobile Mapping and 3D Laser Scanning projects
+        </strong>
+        , my work has focused on turning complex technical challenges into
+        practical, accurate, and dependable solutions.
+      </>,
+
+      <>
+        Today, I combine engineering knowledge, technical support, and project
+        leadership to guide teams, support clients, and deliver geospatial
+        solutions that meet real operational needs. I believe successful
+        projects depend on careful planning, effective teamwork, reliable
+        support, and a clear understanding of each client&apos;s objectives.
+      </>,
+    ],
+
+    skills: [
+      "Mobile Mapping",
+      "CORS / VRS Infrastructure",
+      "3D Laser Scanning",
+      "Technical Support",
+      "Project Leadership",
+      "Customer Training",
+    ],
+
+    highlights: [
+      {
+        value: "13+",
+        label: "Years of Experience",
+        description: "Delivering technical and geospatial solutions.",
+      },
+      {
+        value: "300+",
+        label: "VRS Stations",
+        description:
+          "Installed, operated, and maintained across Saudi Arabia.",
+      },
+      {
+        value: "21",
+        label: "Documented Projects",
+        description:
+          "Across positioning, mapping, and infrastructure sectors.",
+      },
+      {
+        value: "KSA",
+        label: "Project Coverage",
+        description:
+          "Experience across multiple regions of Saudi Arabia.",
+      },
+    ],
+
+    careerLabel: "Career Snapshot",
+    careerHeading: "Professional journey",
+    careerDescription:
+      "A concise overview of the professional roles that shaped my technical and leadership experience.",
+
+    career: [
+      {
+        period: "2012 – 2013",
+        role: "System Engineer",
+        company: "Al-Salam Company",
+        description:
+          "System administration, help desk support, and hardware and software troubleshooting.",
+      },
+      {
+        period: "2013 – Present",
+        role: "Technical Support & Projects Team Leader",
+        company: "Al-Jehat Company",
+        description:
+          "Leading technical support teams and delivering geospatial projects and infrastructure solutions across Saudi Arabia.",
+      },
+    ],
+  },
+
+  ar: {
+    sectionLabel: "نبذة عني",
+
+    headingBefore:
+      "تقديم حلول جيومكانية موثوقة من خلال",
+    headingHighlight:
+      "الخبرة والقيادة والابتكار.",
+
+    paragraphs: [
+      <>
+        لأكثر من عقد من الزمن، ساهمت في دعم المؤسسات في مختلف أنحاء المملكة
+        العربية السعودية لتنفيذ مشاريع جيومكانية متقدمة من خلال{" "}
+        <strong className="font-semibold text-slate-950">
+          القيادة الفنية، وتقنيات المسح المتطورة، والدعم الهندسي الموثوق
+        </strong>
+        .
+      </>,
+
+      <>
+        بدءًا من تركيب وصيانة{" "}
+        <strong className="font-semibold text-slate-950">
+          البنية التحتية لشبكات CORS وVRS
+        </strong>{" "}
+        وصولًا إلى دعم{" "}
+        <strong className="font-semibold text-slate-950">
+          مشاريع المسح المتحرك والمسح بالليزر ثلاثي الأبعاد
+        </strong>
+        ، ركز عملي على تحويل التحديات التقنية المعقدة إلى حلول عملية ودقيقة
+        وموثوقة.
+      </>,
+
+      <>
+        اليوم، أجمع بين المعرفة الهندسية والدعم الفني وقيادة المشاريع لإدارة
+        فرق العمل ودعم العملاء وتنفيذ حلول جيومكانية تلبي الاحتياجات التشغيلية
+        الفعلية. وأؤمن بأن نجاح المشاريع يعتمد على التخطيط الدقيق والعمل
+        الجماعي الفعّال والدعم الموثوق والفهم الواضح لأهداف كل عميل.
+      </>,
+    ],
+
+    skills: [
+      "المسح المتحرك",
+      "البنية التحتية لشبكات CORS / VRS",
+      "المسح بالليزر ثلاثي الأبعاد",
+      "الدعم الفني",
+      "قيادة المشاريع",
+      "تدريب العملاء",
+    ],
+
+    highlights: [
+      {
+        value: "+13",
+        label: "عامًا من الخبرة",
+        description: "في تقديم الحلول التقنية والجيومكانية.",
+      },
+      {
+        value: "+300",
+        label: "محطة VRS",
+        description:
+          "تركيب وتشغيل وصيانة المحطات في مختلف أنحاء المملكة.",
+      },
+      {
+        value: "21",
+        label: "مشروعًا موثقًا",
+        description:
+          "في مجالات تحديد المواقع والمسح والبنية التحتية.",
+      },
+      {
+        value: "KSA",
+        label: "نطاق المشاريع",
+        description:
+          "خبرة في تنفيذ المشاريع بمناطق متعددة من المملكة العربية السعودية.",
+      },
+    ],
+
+    careerLabel: "المسيرة المهنية",
+    careerHeading: "رحلتي المهنية",
+    careerDescription:
+      "نظرة موجزة على المسيرة المهنية التي ساهمت في بناء خبرتي الفنية والقيادية.",
+
+    career: [
+      {
+        period: "2012 – 2013",
+        role: "مهندس أنظمة",
+        company: "شركة السلام",
+        description:
+          "إدارة الأنظمة، ودعم المستخدمين، وتشخيص ومعالجة مشكلات الأجهزة والبرمجيات.",
+      },
+      {
+        period: "2013 – حتى الآن",
+        role: "قائد فريق الدعم الفني والمشاريع",
+        company: "شركة الجهات",
+        description:
+          "قيادة فرق الدعم الفني وتنفيذ المشاريع الجيومكانية وحلول البنية التحتية في مختلف أنحاء المملكة العربية السعودية.",
+      },
+    ],
+  },
+};
+
+export default function About({ lang }: AboutProps) {
+  const text = content[lang];
+
   return (
     <section
       id="about"
@@ -76,15 +231,14 @@ export default function About() {
         <div className="mx-auto mb-16 max-w-4xl text-center lg:mb-20">
           <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
             <span className="h-px w-8 bg-blue-600" />
-            About Me
+            {text.sectionLabel}
             <span className="h-px w-8 bg-blue-600" />
           </span>
 
           <h2 className="mt-5 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
-            Engineering reliable geospatial solutions through
+            {text.headingBefore}{" "}
             <span className="text-blue-600">
-              {" "}
-              expertise, leadership, and innovation.
+              {text.headingHighlight}
             </span>
           </h2>
         </div>
@@ -148,41 +302,20 @@ export default function About() {
 
           {/* Text content */}
           <div>
-            <p className="text-lg leading-8 text-slate-600">
-              For more than a decade, I have been helping organizations across
-              Saudi Arabia deliver complex geospatial projects through{" "}
-              <strong className="font-semibold text-slate-950">
-                technical leadership, advanced mapping technologies, and
-                reliable engineering support
-              </strong>
-              .
-            </p>
-
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              From installing and maintaining{" "}
-              <strong className="font-semibold text-slate-950">
-                CORS and VRS infrastructure
-              </strong>{" "}
-              to supporting{" "}
-              <strong className="font-semibold text-slate-950">
-                Mobile Mapping and 3D Laser Scanning projects
-              </strong>
-              , my work has focused on turning complex technical challenges
-              into practical, accurate, and dependable solutions.
-            </p>
-
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              Today, I combine engineering knowledge, technical support, and
-              project leadership to guide teams, support clients, and deliver
-              geospatial solutions that meet real operational needs. I believe
-              successful projects depend on careful planning, effective
-              teamwork, reliable support, and a clear understanding of each
-              client&apos;s objectives.
-            </p>
+            {text.paragraphs.map((paragraph, index) => (
+              <p
+                key={index}
+                className={`text-lg leading-8 text-slate-600 ${
+                  index > 0 ? "mt-6" : ""
+                }`}
+              >
+                {paragraph}
+              </p>
+            ))}
 
             {/* Skills */}
             <div className="mt-10 flex flex-wrap gap-3">
-              {skills.map((skill) => (
+              {text.skills.map((skill) => (
                 <span
                   key={skill}
                   className="rounded-full border border-slate-200/70 bg-white/80 px-5 py-2.5 text-sm font-medium tracking-wide text-slate-700 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 hover:shadow-md"
@@ -196,11 +329,11 @@ export default function About() {
 
         {/* Professional highlights */}
         <div className="mt-16 grid overflow-hidden rounded-3xl border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_-45px_rgba(15,23,42,0.35)] sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
-          {professionalHighlights.map((highlight, index) => (
+          {text.highlights.map((highlight, index) => (
             <article
               key={highlight.label}
               className={`relative p-6 sm:p-7 ${
-                index < professionalHighlights.length - 1
+                index < text.highlights.length - 1
                   ? "border-b border-slate-200 sm:border-b-0 sm:border-r"
                   : ""
               }`}
@@ -231,21 +364,20 @@ export default function About() {
         <div className="mt-16 lg:mt-20">
           <div className="mb-10 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600">
-              Career Snapshot
+              {text.careerLabel}
             </p>
 
             <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
-              Professional journey
+              {text.careerHeading}
             </h3>
 
             <p className="mt-4 text-sm leading-7 text-slate-500">
-              A concise overview of the professional roles that shaped my
-              technical and leadership experience.
+              {text.careerDescription}
             </p>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            {careerSnapshot.map((career) => (
+            {text.career.map((career) => (
               <article
                 key={`${career.company}-${career.period}`}
                 className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/90 p-7 shadow-[0_18px_50px_-35px_rgba(15,23,42,0.4)] transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_24px_70px_-35px_rgba(37,99,235,0.35)] sm:p-8"

@@ -1,4 +1,47 @@
-export default function Hero() {
+type HeroProps = {
+  lang: "en" | "ar";
+};
+
+const content = {
+  en: {
+    engineer: "Eng.",
+    name: "Rafat Mohammed",
+    position: "Technical Support & Projects Team Leader",
+    description:
+      "Leading and delivering geospatial projects across Saudi Arabia, with specialized experience in Mobile Mapping, CORS and VRS infrastructure, technical support, and project leadership.",
+    viewProjects: "View Projects",
+    downloadCV: "Download CV",
+    contactMe: "Contact Me",
+    expertise: [
+      "Mobile Mapping",
+      "CORS & VRS",
+      "Technical Support",
+      "Project Leadership",
+    ],
+  },
+
+  ar: {
+    engineer: "م.",
+    name: "رأفت محمد",
+    position: "قائد فريق الدعم الفني والمشاريع",
+    description:
+      "قيادة وتنفيذ المشاريع الجيومكانية في مختلف أنحاء المملكة العربية السعودية، مع خبرة متخصصة في أنظمة المسح المتحرك، والبنية التحتية لشبكات CORS وVRS، والدعم الفني، وإدارة المشاريع.",
+    viewProjects: "عرض المشاريع",
+    downloadCV: "تحميل السيرة الذاتية",
+    contactMe: "تواصل معي",
+    expertise: [
+      "المسح المتحرك",
+      "CORS & VRS",
+      "الدعم الفني",
+      "قيادة المشاريع",
+    ],
+  },
+};
+
+export default function Hero({ lang }: HeroProps) {
+  const isArabic = lang === "ar";
+  const text = content[lang];
+
   return (
     <section
       id="home"
@@ -13,23 +56,20 @@ export default function Hero() {
 
       <div className="relative z-20 mx-auto flex min-h-[calc(100vh-6rem)] max-w-6xl items-center justify-center px-6 py-16 lg:px-8">
         <div className="-mt-6 w-full text-center">
-
           {/* Name */}
           <h1 className="text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span className="text-slate-900">Eng.</span>{" "}
-            <span className="text-[#123A73]">Rafat Mohammed</span>
+            <span className="text-slate-900">{text.engineer}</span>{" "}
+            <span className="text-[#123A73]">{text.name}</span>
           </h1>
 
           {/* Position */}
           <p className="mt-7 text-xl font-medium text-slate-600 sm:text-2xl lg:text-3xl">
-            Technical Support &amp; Projects Team Leader
+            {text.position}
           </p>
 
           {/* Description */}
           <p className="mx-auto mt-7 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
-            Leading and delivering geospatial projects across Saudi Arabia,
-            with specialized experience in Mobile Mapping, CORS and VRS
-            infrastructure, technical support, and project leadership.
+            {text.description}
           </p>
 
           {/* Buttons */}
@@ -38,7 +78,7 @@ export default function Hero() {
               href="#projects"
               className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-7 py-4 font-semibold text-white shadow-lg shadow-blue-600/20 transition duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl"
             >
-              View Projects
+              {text.viewProjects}
             </a>
 
             <a
@@ -48,7 +88,7 @@ export default function Hero() {
             >
               <svg
                 viewBox="0 0 24 24"
-                className="mr-3 h-5 w-5"
+                className={isArabic ? "ml-3 h-5 w-5" : "mr-3 h-5 w-5"}
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -61,25 +101,20 @@ export default function Hero() {
                 <path d="M5 21h14" />
               </svg>
 
-              Download CV
+              {text.downloadCV}
             </a>
 
             <a
               href="#contact"
               className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white/40 px-7 py-4 font-semibold text-slate-700 transition duration-300 hover:-translate-y-1 hover:border-blue-400 hover:text-blue-700"
             >
-              Contact Me
+              {text.contactMe}
             </a>
           </div>
 
           {/* Expertise */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            {[
-              "Mobile Mapping",
-              "CORS & VRS",
-              "Technical Support",
-              "Project Leadership",
-            ].map((item) => (
+            {text.expertise.map((item) => (
               <span
                 key={item}
                 className="rounded-full border border-slate-200 bg-white/60 px-4 py-2 text-sm font-medium text-slate-600 backdrop-blur"

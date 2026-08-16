@@ -4,11 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 import {
-  featuredProjects,
+  getLocalizedFeaturedProjects,
+  getLocalizedProjects,
+  type SiteLanguage,
+} from "@/data/localized-projects";
+
+import {
   projectStatistics,
-  projects,
 } from "@/data/projects";
+
 import type { ProjectCategory } from "@/types/project";
+
+type ProjectsProps = {
+  lang: SiteLanguage;
+};
 
 function getCategoryStyles(category: ProjectCategory) {
   switch (category) {
@@ -52,14 +61,87 @@ function formatProjectYear(year: string) {
   return year.replace(/\s*[–—-]\s*/g, " → ");
 }
 
-export default function Projects() {
+const content = {
+  en: {
+    sectionLabel: "Projects",
+    title:
+      "Engineering experience translated into real-world impact.",
+    description:
+      "More than a decade of contributing to geospatial, infrastructure, urban development, and positioning projects across Saudi Arabia.",
+
+    documentedProjects: "Documented projects",
+    yearsExperience: "Years of experience",
+    vrsStations: "VRS stations deployed",
+    selectedProjectsStat: "Selected projects",
+
+    careerTimeline: "Career timeline",
+    careerTimelineTitle:
+      "Continuous geospatial project contribution",
+    location: "Saudi Arabia",
+
+    selectedLabel: "Selected Projects",
+    selectedTitle: "Projects that define the journey.",
+    selectedDescription:
+      "A curated selection representing national positioning infrastructure, mobile mapping, corridor surveys, and regional development projects.",
+
+    organization: "Organization",
+    viewDetails: "View project details",
+
+    allProjects: "All Projects",
+    archiveTitle: "Complete project archive.",
+    documentedSuffix: "documented projects",
+  },
+
+  ar: {
+    sectionLabel: "المشاريع",
+    title:
+      "خبرة هندسية تحولت إلى أثر ملموس في مشاريع حقيقية.",
+    description:
+      "أكثر من عقد من المساهمة في تنفيذ المشاريع الجيومكانية ومشاريع البنية التحتية والتطوير الحضري وتحديد المواقع في مختلف أنحاء المملكة العربية السعودية.",
+
+    documentedProjects: "مشروعًا موثقًا",
+    yearsExperience: "عامًا من الخبرة",
+    vrsStations: "محطة VRS",
+    selectedProjectsStat: "مشاريع مختارة",
+
+    careerTimeline: "المسار المهني",
+    careerTimelineTitle:
+      "مساهمة مستمرة في تنفيذ المشاريع الجيومكانية",
+    location: "المملكة العربية السعودية",
+
+    selectedLabel: "مشاريع مختارة",
+    selectedTitle: "مشاريع بارزة في مسيرتي المهنية.",
+    selectedDescription:
+      "مجموعة مختارة من المشاريع التي تمثل خبرتي في البنية التحتية لتحديد المواقع، والمسح المتحرك، ومسح الممرات، ومشاريع التطوير الإقليمي.",
+
+    organization: "الجهة",
+    viewDetails: "عرض تفاصيل المشروع",
+
+    allProjects: "جميع المشاريع",
+    archiveTitle: "الأرشيف الكامل للمشاريع.",
+    documentedSuffix: "مشروعًا موثقًا",
+  },
+};
+
+export default function Projects({ lang }: ProjectsProps) {
+  const text = content[lang];
+
+  const localizedProjects = getLocalizedProjects(lang);
+
+  const localizedFeaturedProjects =
+    getLocalizedFeaturedProjects(lang);
+
   const careerYears =
     projectStatistics.latestProjectYear -
     projectStatistics.careerStartYear;
 
-  const archiveProjects = [...projects].sort(
-    (a, b) => getProjectStartYear(b.year) - getProjectStartYear(a.year),
+  const archiveProjects = [...localizedProjects].sort(
+    (a, b) =>
+      getProjectStartYear(b.year) -
+      getProjectStartYear(a.year)
   );
+
+  const isArabic = lang === "ar";
 
   return (
     <section
@@ -91,7 +173,7 @@ export default function Projects() {
             />
 
             <span className="shrink-0 text-sm font-semibold uppercase tracking-[0.24em] text-blue-600">
-              Projects
+              {text.sectionLabel}
             </span>
 
             <span
@@ -101,12 +183,11 @@ export default function Projects() {
           </div>
 
           <h2 className="mt-7 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl xl:text-6xl">
-            Engineering experience translated into real-world impact.
+            {text.title}
           </h2>
 
           <p className="mt-6 max-w-4xl text-base leading-8 text-slate-600 sm:text-lg">
-            More than a decade of contributing to geospatial, infrastructure,
-            urban development, and positioning projects across Saudi Arabia.
+            {text.description}
           </p>
         </div>
 
@@ -114,11 +195,11 @@ export default function Projects() {
         <div className="mt-16 grid grid-cols-2 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_70px_-45px_rgba(15,23,42,0.35)] lg:grid-cols-4">
           <div className="border-b border-r border-slate-200 p-6 sm:p-8 lg:border-b-0">
             <p className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-              {projectStatistics.documentedProjects}+
+              {projectStatistics.documentedProjects}
             </p>
 
             <p className="mt-2 text-sm leading-6 text-slate-500">
-              Documented projects
+              {text.documentedProjects}
             </p>
           </div>
 
@@ -128,7 +209,7 @@ export default function Projects() {
             </p>
 
             <p className="mt-2 text-sm leading-6 text-slate-500">
-              Years of experience
+              {text.yearsExperience}
             </p>
           </div>
 
@@ -138,7 +219,7 @@ export default function Projects() {
             </p>
 
             <p className="mt-2 text-sm leading-6 text-slate-500">
-              VRS stations deployed
+              {text.vrsStations}
             </p>
           </div>
 
@@ -148,7 +229,7 @@ export default function Projects() {
             </p>
 
             <p className="mt-2 text-sm leading-6 text-slate-500">
-              Selected projects
+              {text.selectedProjectsStat}
             </p>
           </div>
         </div>
@@ -158,16 +239,16 @@ export default function Projects() {
           <div className="flex items-center justify-between gap-6">
             <div>
               <p className="text-sm font-medium text-slate-500">
-                Career timeline
+                {text.careerTimeline}
               </p>
 
               <p className="mt-1 text-lg font-semibold text-slate-950">
-                Continuous geospatial project contribution
+                {text.careerTimelineTitle}
               </p>
             </div>
 
             <p className="hidden text-sm text-slate-500 sm:block">
-              Saudi Arabia
+              {text.location}
             </p>
           </div>
 
@@ -194,143 +275,160 @@ export default function Projects() {
         <div className="mt-28">
           <div className="max-w-4xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Selected Projects
+              {text.selectedLabel}
             </p>
 
             <h3 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl">
-              Projects that define the journey.
+              {text.selectedTitle}
             </h3>
 
             <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">
-              A curated selection representing national positioning
-              infrastructure, mobile mapping, corridor surveys, and regional
-              development projects.
+              {text.selectedDescription}
             </p>
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {featuredProjects.map((project, index) => {
-              const styles = getCategoryStyles(project.category);
+            {localizedFeaturedProjects.map(
+              (project, index) => {
+                const styles = getCategoryStyles(
+                  project.category
+                );
 
-              return (
-                <Link
-                  key={project.id}
-                  href={`/projects/${project.slug}`}
-                  className="block h-full rounded-[1.75rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4"
-                >
-                  <article
-                    className="group relative h-[460px] overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-950 shadow-[0_20px_65px_-40px_rgba(15,23,42,0.65)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_75px_-38px_rgba(15,23,42,0.72)]"
+                return (
+                  <Link
+                    key={project.id}
+                    href={`/${lang}/projects/${project.slug}`}
+                    className="block h-full rounded-[1.75rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4"
                   >
-                    {/* Project image */}
-                  {project.image && (
-                    <div className="absolute inset-0">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="(min-width: 1024px) 50vw, 100vw"
-                        className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
-                      />
+                    <article className="group relative h-[460px] overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-950 shadow-[0_20px_65px_-40px_rgba(15,23,42,0.65)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_75px_-38px_rgba(15,23,42,0.72)]">
+                      {/* Project image */}
+                      {project.image && (
+                        <div className="absolute inset-0">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            sizes="(min-width: 1024px) 50vw, 100vw"
+                            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+                          />
 
-                      <div
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/25 to-slate-950/70"
-                      />
-                    </div>
-                  )}
+                          <div
+                            aria-hidden="true"
+                            className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/25 to-slate-950/70"
+                          />
+                        </div>
+                      )}
 
-                  {/* Default background for projects without images */}
-                  {!project.image && (
-                    <>
-                      <div
-                        aria-hidden="true"
-                        className={`absolute -right-20 -top-20 h-64 w-64 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-110 ${styles.glow}`}
-                      />
+                      {/* Default background */}
+                      {!project.image && (
+                        <>
+                          <div
+                            aria-hidden="true"
+                            className={`absolute -right-20 -top-20 h-64 w-64 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-110 ${styles.glow}`}
+                          />
 
-                      <div
-                        aria-hidden="true"
-                        className="absolute inset-0 opacity-[0.08]"
-                        style={{
-                          backgroundImage:
-                            "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
-                          backgroundSize: "42px 42px",
-                        }}
-                      />
-                    </>
-                  )}
+                          <div
+                            aria-hidden="true"
+                            className="absolute inset-0 opacity-[0.08]"
+                            style={{
+                              backgroundImage:
+                                "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+                              backgroundSize:
+                                "42px 42px",
+                            }}
+                          />
+                        </>
+                      )}
 
-                  <div className="relative z-10 flex h-full flex-col p-5 sm:p-6">
-                    <div className="flex items-start justify-between gap-5">
-                      <span
-                        className={`inline-flex rounded-full border px-3 py-1.5 text-xs font-semibold ${styles.badge}`}
-                      >
-                        {project.category}
-                      </span>
-
-                      <span className="text-4xl font-semibold tracking-[-0.06em] text-white/20 sm:text-5xl">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-
-                    <div className="mt-auto pt-6">
-                      <div
-                        className={`mb-4 h-1 w-10 rounded-full ${styles.accent}`}
-                      />
-
-                      <p className="text-sm font-medium text-slate-300">
-                        {formatProjectYear(project.year)} ·{" "}
-                        {project.locations.join(" · ")}
-                      </p>
-
-                      <h4 className="mt-3 max-w-xl text-2xl font-semibold tracking-[-0.035em] text-white sm:text-3xl">
-                        {project.title}
-                      </h4>
-
-                      <p className="mt-3 line-clamp-2 max-w-2xl text-sm leading-6 text-slate-200">
-                        {project.summary}
-                      </p>
-
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {project.technologies.slice(0, 2).map((technology) => (
+                      <div className="relative z-10 flex h-full flex-col p-5 sm:p-6">
+                        <div className="flex items-start justify-between gap-5">
                           <span
-                            key={technology}
-                            className="rounded-full border border-white/15 bg-slate-950/35 px-3 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm"
+                            className={`inline-flex rounded-full border px-3 py-1.5 text-xs font-semibold ${styles.badge}`}
                           >
-                            {technology}
+                            {project.categoryLabel}
                           </span>
-                        ))}
 
-                        {project.technologies.length > 2 && (
-                          <span className="rounded-full border border-white/15 bg-slate-950/35 px-3 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm">
-                            +{project.technologies.length - 2}
+                          <span className="text-4xl font-semibold tracking-[-0.06em] text-white/20 sm:text-5xl">
+                            {String(index + 1).padStart(
+                              2,
+                              "0"
+                            )}
                           </span>
-                        )}
-                      </div>
-
-                      <div className="mt-5 flex items-end justify-between gap-4 border-t border-white/15 pt-4">
-                        <div>
-                          <p className="text-xs uppercase tracking-[0.16em] text-slate-400">
-                            Organization
-                          </p>
-
-                          <p className="mt-1 text-sm font-medium text-white">
-                            {project.organization}
-                          </p>
                         </div>
 
-                        <span className="text-right text-sm font-semibold text-white transition group-hover:text-blue-200">
-                          View project details
-                          <span className="ml-2" aria-hidden="true">
-                            →
-                          </span>
-                        </span>
+                        <div className="mt-auto pt-6">
+                          <div
+                            className={`mb-4 h-1 w-10 rounded-full ${styles.accent}`}
+                          />
+
+                          <p className="text-sm font-medium text-slate-300">
+                            {formatProjectYear(project.year)} ·{" "}
+                            {project.locations.join(" · ")}
+                          </p>
+
+                          <h4 className="mt-3 max-w-xl text-2xl font-semibold tracking-[-0.035em] text-white sm:text-3xl">
+                            {project.title}
+                          </h4>
+
+                          <p className="mt-3 line-clamp-2 max-w-2xl text-sm leading-6 text-slate-200">
+                            {project.summary}
+                          </p>
+
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            {project.technologies
+                              .slice(0, 2)
+                              .map((technology) => (
+                                <span
+                                  key={technology}
+                                  className="rounded-full border border-white/15 bg-slate-950/35 px-3 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm"
+                                >
+                                  {technology}
+                                </span>
+                              ))}
+
+                            {project.technologies.length >
+                              2 && (
+                              <span className="rounded-full border border-white/15 bg-slate-950/35 px-3 py-1.5 text-xs font-medium text-slate-200 backdrop-blur-sm">
+                                +
+                                {project.technologies.length -
+                                  2}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="mt-5 flex items-end justify-between gap-4 border-t border-white/15 pt-4">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.16em] text-slate-400">
+                                {text.organization}
+                              </p>
+
+                              <p className="mt-1 text-sm font-medium text-white">
+                                {project.organization}
+                              </p>
+                            </div>
+
+                            <span className="text-right text-sm font-semibold text-white transition group-hover:text-blue-200">
+                              {text.viewDetails}
+
+                              <span
+                                className={
+                                  isArabic
+                                    ? "mr-2"
+                                    : "ml-2"
+                                }
+                                aria-hidden="true"
+                              >
+                                {isArabic ? "←" : "→"}
+                              </span>
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  </article>
-                </Link>
-              );
-            })}
+                    </article>
+                  </Link>
+                );
+              }
+            )}
           </div>
         </div>
 
@@ -338,21 +436,24 @@ export default function Projects() {
         <div className="mt-28">
           <div className="border-b border-slate-200 pb-8">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-              All Projects
+              {text.allProjects}
             </p>
 
             <h3 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl">
-              Complete project archive.
+              {text.archiveTitle}
             </h3>
 
             <p className="mt-4 text-sm text-slate-500">
-              {projects.length} documented projects
+              {localizedProjects.length}{" "}
+              {text.documentedSuffix}
             </p>
           </div>
 
           <div className="divide-y divide-slate-200">
             {archiveProjects.map((project, index) => {
-              const styles = getCategoryStyles(project.category);
+              const styles = getCategoryStyles(
+                project.category
+              );
 
               return (
                 <article
@@ -360,7 +461,10 @@ export default function Projects() {
                   className="grid gap-5 py-8 sm:grid-cols-[52px_1fr_auto] sm:items-center sm:gap-7"
                 >
                   <span className="text-sm font-medium tabular-nums text-slate-400">
-                    {String(index + 1).padStart(2, "0")}
+                    {String(index + 1).padStart(
+                      2,
+                      "0"
+                    )}
                   </span>
 
                   <div>
@@ -372,16 +476,30 @@ export default function Projects() {
                       <span
                         className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold ${styles.badge}`}
                       >
-                        {project.category}
+                        {project.categoryLabel}
                       </span>
                     </div>
 
                     <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
-                      <span>{project.organization}</span>
-                      <span aria-hidden="true">•</span>
-                      <span>{project.locations.join(", ")}</span>
-                      <span aria-hidden="true">•</span>
-                      <span>{project.technologies.join(", ")}</span>
+                      <span>
+                        {project.organization}
+                      </span>
+
+                      <span aria-hidden="true">
+                        •
+                      </span>
+
+                      <span>
+                        {project.locations.join(", ")}
+                      </span>
+
+                      <span aria-hidden="true">
+                        •
+                      </span>
+
+                      <span>
+                        {project.technologies.join(", ")}
+                      </span>
                     </div>
                   </div>
 

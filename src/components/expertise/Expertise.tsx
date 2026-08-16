@@ -1,164 +1,349 @@
-const expertiseItems = [
-  {
-    number: "01",
-    title: "Mobile Mapping Systems",
-    description:
-      "Delivering high-accuracy geospatial data through vehicle-based mapping systems, integrated sensors, point clouds, and efficient field-to-office workflows.",
-    tags: ["Mobile Mapping", "Point Clouds", "Data Integration"],
-    type: "featured",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <path d="M3 16.5h18" />
-        <path d="M5 16.5 6.8 11h10.4l1.8 5.5" />
-        <path d="M7.5 11 9 7.5h6L16.5 11" />
-        <circle cx="7" cy="18.5" r="1.5" />
-        <circle cx="17" cy="18.5" r="1.5" />
-        <path d="M12 7.5V4" />
-        <path d="m9.5 5.5 2.5-2 2.5 2" />
-      </svg>
-    ),
-  },
-  {
-    number: "02",
-    title: "CORS / VRS Infrastructure",
-    description:
-      "Supporting the deployment, configuration, operation, and maintenance of permanent reference station and real-time correction networks.",
-    tags: ["CORS", "VRS Networks", "Infrastructure"],
-    type: "standard",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <path d="M12 4v16" />
-        <path d="M8.5 20h7" />
-        <path d="m9 12 3-8 3 8" />
-        <path d="M6.5 8.5a8 8 0 0 0 0 7" />
-        <path d="M17.5 8.5a8 8 0 0 1 0 7" />
-        <path d="M4 6a11 11 0 0 0 0 12" />
-        <path d="M20 6a11 11 0 0 1 0 12" />
-      </svg>
-    ),
-  },
-  {
-    number: "03",
-    title: "Technical Support",
-    description:
-      "Providing installation, commissioning, troubleshooting, maintenance, and technical guidance for advanced geospatial systems.",
-    tags: ["Support", "Training", "Troubleshooting"],
-    type: "standard",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <path d="M14.7 6.3a4 4 0 0 0-5.5 5.5L4 17l3 3 5.2-5.2a4 4 0 0 0 5.5-5.5l-2.4 2.4-3-3 2.4-2.4Z" />
-        <path d="m5.5 18.5 2-2" />
-      </svg>
-    ),
-  },
-  {
-    number: "04",
-    title: "Project Leadership",
-    description:
-      "Leading technical teams, coordinating stakeholders, managing project requirements, and ensuring reliable delivery from planning to completion.",
-    tags: ["Leadership", "Coordination", "Delivery"],
-    type: "standard",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <circle cx="9" cy="8" r="3" />
-        <circle cx="17" cy="10" r="2.5" />
-        <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
-        <path d="M14 16.5a4.5 4.5 0 0 1 6.5 2.5" />
-      </svg>
-    ),
-  },
-  {
-    number: "05",
-    title: "3D Laser Scanning",
-    description:
-      "Capturing precise three-dimensional spatial data for engineering documentation, analysis, verification, and digital project workflows.",
-    tags: ["Laser Scanning", "3D Data", "Point Clouds"],
-    type: "standard",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
-        <path d="m4.5 7.8 7.5 4.3 7.5-4.3" />
-        <path d="M12 12.1V21" />
-        <path d="m8 10 4-2.3 4 2.3" />
-      </svg>
-    ),
-  },
-  {
-    number: "06",
-    title: "Land & Topographic Surveying",
-    description:
-      "Delivering precise land and topographic surveys for engineering, infrastructure, corridor, and development projects using advanced geospatial technologies.",
-    tags: ["Topographic Survey", "Engineering Survey", "GNSS"],
-    type: "wide",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-        aria-hidden="true"
-      >
-        <circle cx="12" cy="5" r="2" />
-        <path d="M12 7v5" />
-        <path d="M8.5 12h7" />
-        <path d="M10.5 12 7 21" />
-        <path d="M13.5 12 17 21" />
-        <path d="M12 12v9" />
-        <path d="M5 21h14" />
-      </svg>
-    ),
-  },
-];
+type ExpertiseProps = {
+  lang: "en" | "ar";
+};
 
-export default function Expertise() {
+const expertiseItems = {
+  en: [
+    {
+      number: "01",
+      title: "Mobile Mapping Systems",
+      description:
+        "Delivering high-accuracy geospatial data through vehicle-based mapping systems, integrated sensors, point clouds, and efficient field-to-office workflows.",
+      tags: ["Mobile Mapping", "Point Clouds", "Data Integration"],
+      type: "featured",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M3 16.5h18" />
+          <path d="M5 16.5 6.8 11h10.4l1.8 5.5" />
+          <path d="M7.5 11 9 7.5h6L16.5 11" />
+          <circle cx="7" cy="18.5" r="1.5" />
+          <circle cx="17" cy="18.5" r="1.5" />
+          <path d="M12 7.5V4" />
+          <path d="m9.5 5.5 2.5-2 2.5 2" />
+        </svg>
+      ),
+    },
+    {
+      number: "02",
+      title: "CORS / VRS Infrastructure",
+      description:
+        "Supporting the deployment, configuration, operation, and maintenance of permanent reference station and real-time correction networks.",
+      tags: ["CORS", "VRS Networks", "Infrastructure"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M12 4v16" />
+          <path d="M8.5 20h7" />
+          <path d="m9 12 3-8 3 8" />
+          <path d="M6.5 8.5a8 8 0 0 0 0 7" />
+          <path d="M17.5 8.5a8 8 0 0 1 0 7" />
+          <path d="M4 6a11 11 0 0 0 0 12" />
+          <path d="M20 6a11 11 0 0 1 0 12" />
+        </svg>
+      ),
+    },
+    {
+      number: "03",
+      title: "Technical Support",
+      description:
+        "Providing installation, commissioning, troubleshooting, maintenance, and technical guidance for advanced geospatial systems.",
+      tags: ["Support", "Training", "Troubleshooting"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M14.7 6.3a4 4 0 0 0-5.5 5.5L4 17l3 3 5.2-5.2a4 4 0 0 0 5.5-5.5l-2.4 2.4-3-3 2.4-2.4Z" />
+          <path d="m5.5 18.5 2-2" />
+        </svg>
+      ),
+    },
+    {
+      number: "04",
+      title: "Project Leadership",
+      description:
+        "Leading technical teams, coordinating stakeholders, managing project requirements, and ensuring reliable delivery from planning to completion.",
+      tags: ["Leadership", "Coordination", "Delivery"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <circle cx="9" cy="8" r="3" />
+          <circle cx="17" cy="10" r="2.5" />
+          <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+          <path d="M14 16.5a4.5 4.5 0 0 1 6.5 2.5" />
+        </svg>
+      ),
+    },
+    {
+      number: "05",
+      title: "3D Laser Scanning",
+      description:
+        "Capturing precise three-dimensional spatial data for engineering documentation, analysis, verification, and digital project workflows.",
+      tags: ["Laser Scanning", "3D Data", "Point Clouds"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+          <path d="m4.5 7.8 7.5 4.3 7.5-4.3" />
+          <path d="M12 12.1V21" />
+          <path d="m8 10 4-2.3 4 2.3" />
+        </svg>
+      ),
+    },
+    {
+      number: "06",
+      title: "Land & Topographic Surveying",
+      description:
+        "Delivering precise land and topographic surveys for engineering, infrastructure, corridor, and development projects using advanced geospatial technologies.",
+      tags: ["Topographic Survey", "Engineering Survey", "GNSS"],
+      type: "wide",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="5" r="2" />
+          <path d="M12 7v5" />
+          <path d="M8.5 12h7" />
+          <path d="M10.5 12 7 21" />
+          <path d="M13.5 12 17 21" />
+          <path d="M12 12v9" />
+          <path d="M5 21h14" />
+        </svg>
+      ),
+    },
+  ],
+
+  ar: [
+    {
+      number: "01",
+      title: "أنظمة المسح المتحرك",
+      description:
+        "إنتاج بيانات جيومكانية عالية الدقة باستخدام أنظمة المسح المثبتة على المركبات، والمستشعرات المتكاملة، والسحب النقطية، مع سير عمل فعّال من الميدان إلى المكتب.",
+      tags: ["المسح المتحرك", "السحب النقطية", "تكامل البيانات"],
+      type: "featured",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M3 16.5h18" />
+          <path d="M5 16.5 6.8 11h10.4l1.8 5.5" />
+          <path d="M7.5 11 9 7.5h6L16.5 11" />
+          <circle cx="7" cy="18.5" r="1.5" />
+          <circle cx="17" cy="18.5" r="1.5" />
+          <path d="M12 7.5V4" />
+          <path d="m9.5 5.5 2.5-2 2.5 2" />
+        </svg>
+      ),
+    },
+    {
+      number: "02",
+      title: "البنية التحتية لشبكات CORS / VRS",
+      description:
+        "دعم تنفيذ وتهيئة وتشغيل وصيانة شبكات المحطات المرجعية الدائمة وشبكات التصحيحات اللحظية عالية الدقة.",
+      tags: ["CORS", "شبكات VRS", "البنية التحتية"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M12 4v16" />
+          <path d="M8.5 20h7" />
+          <path d="m9 12 3-8 3 8" />
+          <path d="M6.5 8.5a8 8 0 0 0 0 7" />
+          <path d="M17.5 8.5a8 8 0 0 1 0 7" />
+          <path d="M4 6a11 11 0 0 0 0 12" />
+          <path d="M20 6a11 11 0 0 1 0 12" />
+        </svg>
+      ),
+    },
+    {
+      number: "03",
+      title: "الدعم الفني",
+      description:
+        "تقديم خدمات التركيب والتشغيل واستكشاف الأعطال والصيانة والإرشاد الفني للأنظمة الجيومكانية المتقدمة.",
+      tags: ["الدعم الفني", "التدريب", "معالجة الأعطال"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M14.7 6.3a4 4 0 0 0-5.5 5.5L4 17l3 3 5.2-5.2a4 4 0 0 0 5.5-5.5l-2.4 2.4-3-3 2.4-2.4Z" />
+          <path d="m5.5 18.5 2-2" />
+        </svg>
+      ),
+    },
+    {
+      number: "04",
+      title: "قيادة المشاريع",
+      description:
+        "قيادة الفرق الفنية، والتنسيق مع أصحاب المصلحة، وإدارة متطلبات المشاريع، وضمان التنفيذ الموثوق من مرحلة التخطيط وحتى الإنجاز.",
+      tags: ["القيادة", "التنسيق", "تنفيذ المشاريع"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <circle cx="9" cy="8" r="3" />
+          <circle cx="17" cy="10" r="2.5" />
+          <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+          <path d="M14 16.5a4.5 4.5 0 0 1 6.5 2.5" />
+        </svg>
+      ),
+    },
+    {
+      number: "05",
+      title: "المسح بالليزر ثلاثي الأبعاد",
+      description:
+        "التقاط بيانات مكانية ثلاثية الأبعاد عالية الدقة لأغراض التوثيق الهندسي والتحليل والتحقق ودعم سير العمل الرقمي للمشاريع.",
+      tags: ["المسح بالليزر", "بيانات ثلاثية الأبعاد", "السحب النقطية"],
+      type: "standard",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+          <path d="m4.5 7.8 7.5 4.3 7.5-4.3" />
+          <path d="M12 12.1V21" />
+          <path d="m8 10 4-2.3 4 2.3" />
+        </svg>
+      ),
+    },
+    {
+      number: "06",
+      title: "المسح الأرضي والطبوغرافي",
+      description:
+        "تنفيذ أعمال المسح الأرضي والطبوغرافي بدقة عالية لمشاريع الهندسة والبنية التحتية والممرات ومشاريع التطوير باستخدام التقنيات الجيومكانية المتقدمة.",
+      tags: ["المسح الطبوغرافي", "المسح الهندسي", "GNSS"],
+      type: "wide",
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="5" r="2" />
+          <path d="M12 7v5" />
+          <path d="M8.5 12h7" />
+          <path d="M10.5 12 7 21" />
+          <path d="M13.5 12 17 21" />
+          <path d="M12 12v9" />
+          <path d="M5 21h14" />
+        </svg>
+      ),
+    },
+  ],
+};
+
+const sectionContent = {
+  en: {
+    label: "Professional Expertise",
+    title: "Technical expertise built through real-world engineering.",
+    description:
+      "Specialized capabilities developed through more than a decade of delivering geospatial solutions, technical support, infrastructure, and engineering projects across Saudi Arabia.",
+  },
+
+  ar: {
+    label: "الخبرات المهنية",
+    title: "خبرات تقنية بُنيت من خلال العمل الهندسي الميداني.",
+    description:
+      "خبرات متخصصة تطورت على مدار أكثر من عقد من العمل في تنفيذ الحلول الجيومكانية والدعم الفني ومشاريع البنية التحتية والهندسة في مختلف أنحاء المملكة العربية السعودية.",
+  },
+};
+
+export default function Expertise({ lang }: ExpertiseProps) {
+  const items = expertiseItems[lang];
+  const text = sectionContent[lang];
+
   return (
     <section
       id="expertise"
@@ -182,26 +367,24 @@ export default function Expertise() {
             <span className="h-px w-8 bg-blue-600" />
 
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-600">
-              Professional Expertise
+              {text.label}
             </p>
 
             <span className="h-px w-8 bg-blue-600" />
           </div>
 
           <h2 className="mt-6 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl lg:text-5xl">
-            Technical expertise built through real-world engineering.
+            {text.title}
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-            Specialized capabilities developed through more than a decade of
-            delivering geospatial solutions, technical support, infrastructure,
-            and engineering projects across Saudi Arabia.
+            {text.description}
           </p>
         </div>
 
         {/* Expertise grid */}
         <div className="mt-14 grid grid-cols-1 gap-5 lg:mt-16 lg:grid-cols-2">
-          {expertiseItems.map((item) => {
+          {items.map((item) => {
             const isFeatured = item.type === "featured";
             const isWide = item.type === "wide";
 
@@ -226,7 +409,7 @@ export default function Expertise() {
                   }`}
                 />
 
-                {/* Decorative grid for featured and wide cards */}
+                {/* Decorative grid */}
                 {(isFeatured || isWide) && (
                   <div
                     aria-hidden="true"

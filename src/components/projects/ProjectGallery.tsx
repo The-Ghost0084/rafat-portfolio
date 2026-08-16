@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -13,6 +14,13 @@ export default function ProjectGallery({
   images,
   projectTitle,
 }: ProjectGalleryProps) {
+  const params = useParams();
+
+  const lang =
+    typeof params?.lang === "string" ? params.lang : "en";
+
+  const isArabic = lang === "ar";
+
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -43,19 +51,69 @@ export default function ProjectGallery({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeLightbox();
-      if (event.key === "ArrowLeft") showPrevious();
-      if (event.key === "ArrowRight") showNext();
+
+      if (event.key === "ArrowLeft") {
+        if (isArabic) {
+          showNext();
+        } else {
+          showPrevious();
+        }
+      }
+
+      if (event.key === "ArrowRight") {
+        if (isArabic) {
+          showPrevious();
+        } else {
+          showNext();
+        }
+      }
     };
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeIndex, closeLightbox, showNext, showPrevious]);
+  }, [
+    activeIndex,
+    closeLightbox,
+    showNext,
+    showPrevious,
+    isArabic,
+  ]);
+
+  const text = {
+    gallery: isArabic ? "معرض المشروع" : "Project Gallery",
+
+    title: isArabic
+      ? "الأعمال الميدانية، التركيب، وتسليم المشروع."
+      : "Fieldwork, installation, and project delivery.",
+
+    description: isArabic
+      ? "سجل مرئي لأعمال تنفيذ المشروع والمعدات والأنشطة الميدانية والبنية التحتية المنجزة."
+      : "A visual record of the project's implementation, equipment, field activities, and completed infrastructure.",
+
+    photo: isArabic ? "صورة" : "Photo",
+    photos: isArabic ? "صور" : "Photos",
+
+    view: isArabic ? "عرض" : "View",
+
+    close: isArabic ? "إغلاق عارض الصور" : "Close image viewer",
+
+    previous: isArabic ? "الصورة السابقة" : "Previous image",
+
+    next: isArabic ? "الصورة التالية" : "Next image",
+
+    imageViewer: isArabic ? "عارض صور" : "image viewer",
+
+    projectImage: isArabic ? "صورة المشروع" : "project image",
+
+    openImage: isArabic ? "فتح صورة المشروع" : "Open project image",
+  };
 
   const lightbox =
     mounted && activeIndex !== null
@@ -63,7 +121,12 @@ export default function ProjectGallery({
           <div
             role="dialog"
             aria-modal="true"
-            aria-label={`${projectTitle} image viewer`}
+            aria-label={
+              isArabic
+                ? `${text.imageViewer} ${projectTitle}`
+                : `${projectTitle} ${text.imageViewer}`
+            }
+            dir={isArabic ? "rtl" : "ltr"}
             style={{
               position: "fixed",
               inset: 0,
@@ -78,7 +141,7 @@ export default function ProjectGallery({
             {/* Backdrop click area */}
             <button
               type="button"
-              aria-label="Close image viewer"
+              aria-label={text.close}
               onClick={closeLightbox}
               style={{
                 position: "absolute",
@@ -107,7 +170,15 @@ export default function ProjectGallery({
             >
               <img
                 src={images[activeIndex]}
-                alt={`${projectTitle} project image ${activeIndex + 1}`}
+                alt={
+                  isArabic
+                    ? `${projectTitle} - ${text.projectImage} ${
+                        activeIndex + 1
+                      }`
+                    : `${projectTitle} ${text.projectImage} ${
+                        activeIndex + 1
+                      }`
+                }
                 style={{
                   display: "block",
                   maxWidth: "100%",
@@ -125,7 +196,7 @@ export default function ProjectGallery({
             <button
               type="button"
               onClick={closeLightbox}
-              aria-label="Close image viewer"
+              aria-label={text.close}
               style={{
                 position: "absolute",
                 top: "22px",
@@ -150,7 +221,7 @@ export default function ProjectGallery({
               <button
                 type="button"
                 onClick={showPrevious}
-                aria-label="Previous image"
+                aria-label={text.previous}
                 style={{
                   position: "absolute",
                   left: "22px",
@@ -177,7 +248,7 @@ export default function ProjectGallery({
               <button
                 type="button"
                 onClick={showNext}
-                aria-label="Next image"
+                aria-label={text.next}
                 style={{
                   position: "absolute",
                   right: "22px",
@@ -225,26 +296,29 @@ export default function ProjectGallery({
 
   return (
     <>
-      <section className="bg-slate-50 py-20 sm:py-24">
+      <section
+        className="bg-slate-50 py-20 sm:py-24"
+        dir={isArabic ? "rtl" : "ltr"}
+      >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600">
-                Project Gallery
+                {text.gallery}
               </p>
 
               <h2 className="mt-4 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">
-                Fieldwork, installation, and project delivery.
+                {text.title}
               </h2>
 
               <p className="mt-5 text-base leading-8 text-slate-600">
-                A visual record of the project&apos;s implementation, equipment,
-                field activities, and completed infrastructure.
+                {text.description}
               </p>
             </div>
 
             <p className="shrink-0 text-sm font-medium text-slate-500">
-              {images.length} {images.length === 1 ? "Photo" : "Photos"}
+              {images.length}{" "}
+              {images.length === 1 ? text.photo : text.photos}
             </p>
           </div>
 
@@ -254,7 +328,11 @@ export default function ProjectGallery({
                 key={`${image}-${index}`}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                aria-label={`Open ${projectTitle} project image ${index + 1}`}
+                aria-label={
+                  isArabic
+                    ? `${text.openImage} ${index + 1} - ${projectTitle}`
+                    : `${text.openImage} ${projectTitle} ${index + 1}`
+                }
                 className="group relative aspect-[4/3] cursor-zoom-in overflow-hidden rounded-3xl border border-slate-200 bg-slate-950 text-left shadow-[0_18px_55px_-38px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_65px_-35px_rgba(15,23,42,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4"
               >
                 <Image
@@ -273,7 +351,11 @@ export default function ProjectGallery({
 
                 <Image
                   src={image}
-                  alt={`${projectTitle} project image ${index + 1}`}
+                  alt={
+                    isArabic
+                      ? `${projectTitle} - ${text.projectImage} ${index + 1}`
+                      : `${projectTitle} ${text.projectImage} ${index + 1}`
+                  }
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
@@ -289,7 +371,7 @@ export default function ProjectGallery({
                 </span>
 
                 <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-slate-950/45 px-3 py-1.5 text-xs font-medium text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
-                  View
+                  {text.view}
                 </span>
               </button>
             ))}
